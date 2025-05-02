@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Book Your Cleaning{% endblock %}
+{% block content %}
+    <section class="content-section">
+        <h2>Book Your Cleaning</h2>
+        <form method="POST" class="contact-form" id="booking-form">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                <label for="date">Preferred Date</label>
+                {{ form.date(id="date", required=True, **{'aria-required': 'true'}) }}
+                {% for error in form.date.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label for="service">Service</label>
+                {{ form.service(id="service", required=True, **{'aria-required': 'true'}) }}
+                {% for error in form.service.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            {{ form.submit(class="cta-button") }}
+        </form>
+    </section>
+{% endblock %}

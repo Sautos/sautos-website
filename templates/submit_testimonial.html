@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Submit Testimonial{% endblock %}
+{% block content %}
+    <section class="content-section">
+        <h2>Submit a Testimonial</h2>
+        <form method="POST" class="contact-form">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                <label for="content">Your Testimonial</label>
+                {{ form.content(id="content", required=True, **{'aria-required': 'true'}) }}
+                {% for error in form.content.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            {{ form.submit(class="cta-button") }}
+        </form>
+    </section>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Admin Panel{% endblock %}
+{% block content %}
+    <section class="content-section">
+        <h2>Admin Panel</h2>
+        <h3>Manage Bookings</h3>
+        {% if bookings %}
+            <table class="booking-table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Date</th>
+                        <th>Service</th>
+                        <th>Status</th>
+                        <th>Booked On</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking.user.name }}</td>
+                            <td>{{ booking.user.email }}</td>
+                            <td>{{ booking.date.strftime('%Y-%m-%d') }}</td>
+                            <td>{{ booking.service }}</td>
+                            <td>{{ booking.status | capitalize }}</td>
+                            <td>{{ booking.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>
+                                <form method="POST" style="display:inline;">
+                                    {% if booking.status == 'pending' %}
+                                        <button type="submit" name="confirm_booking" value="{{ booking.id }}" class="cta-button">Confirm</button>
+                                        <button type="submit" name="cancel_booking" value="{{ booking.id }}" class="delete-button">Cancel</button>
+                                    {% endif %}
+                                    <button type="submit" name="delete_booking" value="{{ booking.id }}" class="delete-button">Delete</button>
+                                </form>
+                                <a href="{{ url_for('email_user', user_id=booking.user.id) }}" class="cta-button">Email User</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No bookings yet.</p>
+        {% endif %}
+
+        <h3>Manage Testimonials</h3>
+        {% if testimonials %}
+            <table class="booking-table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Content</th>
+                        <th>Submitted On</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for testimonial in testimonials %}
+                        <tr>
+                            <td>{{ testimonial.user.name }}</td>
+                            <td>{{ testimonial.content }}</td>
+                            <td>{{ testimonial.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>
+                                <form method="POST" style="display:inline;">
+                                    <button type="submit" name="delete_testimonial" value="{{ testimonial.id }}" class="delete-button">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No testimonials yet.</p>
+        {% endif %}
+    </section>
+{% endblock %}

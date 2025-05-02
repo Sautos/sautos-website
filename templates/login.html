@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+    <section class="content-section">
+        <h2>Login</h2>
+        <form method="POST" class="contact-form">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                <label for="email">Email</label>
+                {{ form.email(id="email", required=True, **{'aria-required': 'true'}) }}
+                {% for error in form.email.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                {{ form.password(id="password", required=True, **{'aria-required': 'true'}) }}
+                {% for error in form.password.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            {{ form.submit(class="cta-button") }}
+        </form>
+        <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a>.</p>
+    </section>
+{% endblock %}

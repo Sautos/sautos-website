@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <section class="content-section">
+        <h2>Welcome, {{ current_user.name }}!</h2>
+        <h3>Your Booking History</h3>
+        {% if bookings %}
+            <table class="booking-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Service</th>
+                        <th>Status</th>
+                        <th>Booked On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking.date.strftime('%Y-%m-%d') }}</td>
+                            <td>{{ booking.service }}</td>
+                            <td>{{ booking.status | capitalize }}</td>
+                            <td>{{ booking.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>You have no bookings yet. <a href="{{ url_for('booking') }}">Book now</a>!</p>
+        {% endif %}
+        <a href="{{ url_for('submit_testimonial') }}" class="cta-button">Leave a Testimonial</a>
+    </section>
+{% endblock %}

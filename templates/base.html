@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="S-AUTOS offers premium, chemical-free exterior and interior car cleaning. Book your luxury detailing experience today!">
+    <meta name="keywords" content="car detailing, luxury car cleaning, chemical-free detailing, exterior cleaning, interior cleaning, S-AUTOS">
+    <meta name="author" content="S-AUTOS">
+    <title>S-AUTOS | {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="site-wrapper">
+        <!-- Navigation Bar -->
+        <nav class="navbar" aria-label="Main navigation">
+            <div class="logo">
+                <h1>S-AUTOS</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('services') }}">Services</a></li>
+                <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                <li><a href="{{ url_for('booking') }}">Book Now</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    {% if current_user.is_admin %}
+                        <li><a href="{{ url_for('admin') }}">Admin</a></li>
+                    {% endif %}
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Content Block -->
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2025 S-AUTOS. All Rights Reserved.</p>
+        </footer>
+
+        <!-- Scroll to Top Button -->
+        <button id="scroll-to-top" aria-label="Scroll to top">↑</button>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

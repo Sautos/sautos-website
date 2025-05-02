@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+    <section class="content-section">
+        <h2>Register</h2>
+        <form method="POST" class="contact-form">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                <label for="name">Name</label>
+                {{ form.name(id="name", required=True, **{'aria-required': 'true'}) }}
+                {% for error in form.name.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                {{ form.email(id="email", required=True, **{'aria-required': 'true'}) }}
+                {% for error in form.email.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                {{ form.password(id="password", required=True, **{'aria-required': 'true'}) }}
+                {% for error in form.password.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                {{ form.confirm_password(id="confirm_password", required=True, **{'aria-required': 'true'}) }}
+                {% for error in form.confirm_password.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            {{ form.submit(class="cta-button") }}
+        </form>
+        <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a>.</p>
+    </section>
+{% endblock %}

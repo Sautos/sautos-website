@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Luxury Car Cleaning{% endblock %}
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="fade-in">Luxury Car Cleaning</h1>
+            <p class="fade-in">Experience premium, chemical-free exterior and interior cleaning at S-AUTOS. Your car deserves the best.</p>
+            <a href="{{ url_for('booking') }}" class="cta-button fade-in">Book Your Cleaning Now</a>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="content-section">
+        <h2>What Our Clients Say</h2>
+        <div class="testimonials-grid">
+            {% for testimonial in testimonials %}
+                <div class="testimonial-card">
+                    <p>"{{ testimonial.content }}"</p>
+                    <h4>— {{ testimonial.user.name }}</h4>
+                </div>
+            {% endfor %}
+        </div>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('submit_testimonial') }}" class="cta-button">Leave a Testimonial</a>
+        {% endif %}
+    </section>
+{% endblock %}

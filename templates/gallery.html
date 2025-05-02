@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Gallery{% endblock %}
+{% block content %}
+    <section class="content-section">
+        <h2>Our Work</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Exterior Clean" onclick="openLightbox(this)">
+                <p>Exterior Cleaning: Before & After</p>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Interior Clean" onclick="openLightbox(this)">
+                <p>Interior Cleaning: Spotless Finish</p>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3ab2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Exterior Shine" onclick="openLightbox(this)">
+                <p>Exterior Shine: Mirror-Like Finish</p>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Interior Detail" onclick="openLightbox(this)">
+                <p>Interior Detailing: Luxurious Clean</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <span class="close" onclick="closeLightbox()">×</span>
+        <img id="lightbox-img" src="" alt="Lightbox Image">
+    </div>
+{% endblock %}
