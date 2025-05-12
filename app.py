@@ -11,6 +11,36 @@ from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from dateutil.parser import parse
 
+import sys
+import os
+import logging
+
+# Set up logging to print to stderr (visible in Render logs)
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Log the Python version and sys.path
+logger.info(f"Python version: {sys.version}")
+logger.info(f"sys.path: {sys.path}")
+
+# Log the site-packages directory where flask_wtf should be installed
+site_packages = next(p for p in sys.path if 'site-packages' in p)
+logger.info(f"Site-packages directory: {site_packages}")
+
+# Log the contents of the site-packages directory
+try:
+    site_packages_contents = os.listdir(site_packages)
+    logger.info(f"Site-packages contents: {site_packages_contents}")
+except Exception as e:
+    logger.error(f"Error listing site-packages contents: {str(e)}")
+
+# Try importing flask_wtf and log the result
+try:
+    import flask_wtf
+    logger.info(f"Successfully imported flask_wtf: {flask_wtf.__version__}")
+except ImportError as e:
+    logger.error(f"Failed to import flask_wtf: {str(e)}")
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'sautos_secret_key_2025'
 
