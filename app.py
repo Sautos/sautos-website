@@ -1,19 +1,93 @@
-import os
-from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from flask_wtf import FlaskForm
-from flask_mail import Mail, Message
-from wtforms import StringField, PasswordField, TextAreaField, SelectField, DateField, SubmitField
-from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
-from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime, date
-from dateutil.relativedelta import relativedelta
-from dateutil.parser import parse
-
 import sys
 import os
 import logging
+
+# Set up logging to print to stderr (visible in Render logs)
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Log the Python version and sys.path
+logger.info(f"Python version: {sys.version}")
+logger.info(f"sys.path: {sys.path}")
+
+# Log the site-packages directory
+site_packages = next(p for p in sys.path if 'site-packages' in p)
+logger.info(f"Site-packages directory: {site_packages}")
+
+# Log the contents of the site-packages directory
+try:
+    site_packages_contents = os.listdir(site_packages)
+    logger.info(f"Site-packages contents: {site_packages_contents}")
+except Exception as e:
+    logger.error(f"Error listing site-packages contents: {str(e)}")
+
+# Debug each import step-by-step
+try:
+    import flask
+    logger.info(f"Successfully imported flask: {flask.__version__}")
+except ImportError as e:
+    logger.error(f"Failed to import flask: {str(e)}")
+
+try:
+    from flask import Flask, render_template, request, redirect, url_for, flash
+    logger.info("Successfully imported Flask components")
+except ImportError as e:
+    logger.error(f"Failed to import Flask components: {str(e)}")
+
+try:
+    from flask_sqlalchemy import SQLAlchemy
+    logger.info("Successfully imported flask_sqlalchemy")
+except ImportError as e:
+    logger.error(f"Failed to import flask_sqlalchemy: {str(e)}")
+
+try:
+    from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+    logger.info("Successfully imported flask_login")
+except ImportError as e:
+    logger.error(f"Failed to import flask_login: {str(e)}")
+
+try:
+    from flask_wtf import FlaskForm
+    logger.info("Successfully imported flask_wtf")
+except ImportError as e:
+    logger.error(f"Failed to import flask_wtf: {str(e)}")
+
+try:
+    from flask_mail import Mail, Message
+    logger.info("Successfully imported flask_mail")
+except ImportError as e:
+    logger.error(f"Failed to import flask_mail: {str(e)}")
+
+try:
+    from wtforms import StringField, PasswordField, TextAreaField, SelectField, DateField, SubmitField
+    logger.info("Successfully imported wtforms")
+except ImportError as e:
+    logger.error(f"Failed to import wtforms: {str(e)}")
+
+try:
+    from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
+    logger.info("Successfully imported wtforms.validators")
+except ImportError as e:
+    logger.error(f"Failed to import wtforms.validators: {str(e)}")
+
+try:
+    from werkzeug.security import generate_password_hash, check_password_hash
+    logger.info("Successfully imported werkzeug.security")
+except ImportError as e:
+    logger.error(f"Failed to import werkzeug.security: {str(e)}")
+
+try:
+    from datetime import datetime, date
+    logger.info("Successfully imported datetime")
+except ImportError as e:
+    logger.error(f"Failed to import datetime: {str(e)}")
+
+try:
+    from dateutil.relativedelta import relativedelta
+    from dateutil.parser import parse
+    logger.info("Successfully imported dateutil")
+except ImportError as e:
+    logger.error(f"Failed to import dateutil: {str(e)}")
 
 # Set up logging to print to stderr (visible in Render logs)
 logging.basicConfig(level=logging.INFO)
