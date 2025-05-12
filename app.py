@@ -11,29 +11,48 @@ logger = logging.getLogger(__name__)
 logger.info(f"Python version: {sys.version}")
 logger.info(f"sys.path: {sys.path}")
 
-# Load flask_wtf using importlib
-try:
-    spec = importlib.util.find_spec("flask_wtf")
-    if spec is None:
-        logger.error("importlib.util.find_spec('flask_wtf') returned None")
-        raise ImportError("Cannot find flask_wtf module")
-    else:
-        logger.info(f"Found flask_wtf spec: {spec}")
-        module = importlib.util.module_from_spec(spec)
-        sys.modules["flask_wtf"] = module
-        spec.loader.exec_module(module)
-        logger.info("Successfully loaded flask_wtf using importlib")
-        flask_wtf = sys.modules["flask_wtf"]
-        FlaskForm = flask_wtf.FlaskForm
-except Exception as e:
-    logger.error(f"Failed to load flask_wtf using importlib: {str(e)}")
-    raise
+# Function to load modules using importlib
+def load_module(module_name):
+    try:
+        spec = importlib.util.find_spec(module_name)
+        if spec is None:
+            logger.error(f"importlib.util.find_spec('{module_name}') returned None")
+            raise ImportError(f"Cannot find {module_name} module")
+        else:
+            logger.info(f"Found {module_name} spec: {spec}")
+            module = importlib.util.module_from_spec(spec)
+            sys.modules[module_name] = module
+            spec.loader.exec_module(module)
+            logger.info(f"Successfully loaded {module_name} using importlib")
+            return sys.modules[module_name]
+    except Exception as e:
+        logger.error(f"Failed to load {module_name} using importlib: {str(e)}")
+        raise
 
-# Original imports
+# Load flask_wtf
+flask_wtf = load_module("flask_wtf")
+FlaskForm = flask_wtf.FlaskForm
+
+# Load flask_sqlalchemy
+flask_sqlalchemy = load_module("flask_sqlalchemy")
+SQLAlchemy = flask_sqlalchemy.SQLAlchemy
+
+# Load flask_login
+flask_login = load_module("flask_login")
+LoginManager = flask_login.LoginManager
+UserMixin = flask_login.UserMixin
+login_user = flask_login.login_user
+login_required = flask_login.login_required
+logout_user = flask_login.logout_user
+current_user = flask_login.current_user
+
+# Load flask_mail
+flask_mail = load_module("flask_mail")
+Mail = flask_mail.Mail
+Message = flask_mail.Message
+
+# Original imports that don't need importlib
 from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from flask_mail import Mail, Message
 from wtforms import StringField, PasswordField, TextAreaField, SelectField, DateField, SubmitField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 from werkzeug.security import generate_password_hash, check_password_hash
